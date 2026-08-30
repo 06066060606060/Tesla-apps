@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Xbmod Tesla Tools — four ESP32 applications for controlled research and bench testing.">
+<title>Xbmod Tesla Tools</title>
+<style>
+:root{
+  --bg:#07080b; --panel:#101218; --panel2:#151821; --text:#f5f7fa;
+  --muted:#9da4b0; --line:rgba(255,255,255,.09); --accent:#e82127;
+  --accent2:#ff4d52; --green:#35d39a; --blue:#6ea8ff;
+  --shadow:0 24px 70px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--text); background:
+  radial-gradient(circle at 80% 5%,rgba(232,33,39,.14),transparent 30%),
+  radial-gradient(circle at 10% 25%,rgba(110,168,255,.07),transparent 28%),
+  var(--bg);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.55;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1160px,92%);margin:auto}
+nav{
+  position:sticky;top:0;z-index:20;backdrop-filter:blur(18px);
+  background:rgba(7,8,11,.72);border-bottom:1px solid var(--line)
+}
+.nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;letter-spacing:.02em}.brand span{color:var(--accent)}
+.navlinks{display:flex;gap:26px;color:var(--muted);font-size:14px}
+.navlinks a:hover{color:#fff}
+.hero{padding:85px 0 90px;position:relative;overflow:hidden}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);
+  border-radius:999px;padding:7px 12px;color:#cbd0d8;background:rgba(255,255,255,.03);font-size:13px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green)}
+h1{font-size:clamp(46px,8vw,88px);line-height:.96;letter-spacing:-.055em;max-width:920px;margin:25px 0}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lead{max-width:720px;color:var(--muted);font-size:19px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{padding:13px 18px;border-radius:12px;border:1px solid var(--line);background:#171a22;font-weight:700}
+.btn.primary{background:var(--accent);border-color:var(--accent)}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:60px}
+.stat{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
+.stat b{display:block;font-size:24px}.stat span{color:var(--muted);font-size:13px}
+section{padding:25px 0}
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}
+.kicker{color:var(--accent);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em}
+h2{font-size:40px;letter-spacing:-.035em;margin:6px 0}
+.section-head p{max-width:520px;color:var(--muted);margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  border-radius:24px;overflow:hidden;box-shadow:var(--shadow);min-height:720px}
+.card-top{padding:26px 26px 18px;display:flex;justify-content:space-between;gap:20px}
+.number{font-size:12px;color:#737b88;font-weight:800}
+.tag{font-size:11px;padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:#bfc5cf}
+.card h3{font-size:27px;line-height:1.1;margin:10px 0}
+.card p{color:var(--muted);margin:0}
+.card-body{padding:0 26px 26px}
+.features{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.feature{font-size:12px;padding:7px 9px;border-radius:9px;background:#1a1e27;color:#d6dae1}
+.thumb{height:430px;background:#0b0d12;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:14px}
+.image-link{display:block;width:100%;height:100%;cursor:zoom-in}
+.image-link img{width:100%;height:100%;object-fit:contain;object-position:center;border-radius:12px;transition:transform .25s ease,filter .25s ease}
+.image-link:hover img{transform:scale(1.015);filter:brightness(1.08)}
+.detail{margin-top:18px;padding:16px 17px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.16)}
+.detail strong{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.detail ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
+.detail li{margin:5px 0}
+.card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.link{color:#fff;font-weight:800;font-size:14px}.link:hover{color:var(--accent2)}
+.notice{margin-top:18px;padding:20px;border:1px solid rgba(232,33,39,.25);background:rgba(232,33,39,.06);border-radius:16px;color:#c7ccd5}
+.arch{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.arch-card{padding:25px;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
+.arch-card strong{display:block;font-size:20px;margin-bottom:8px}
+.arch-card p{color:var(--muted);margin:0}
+footer{padding:45px 0;border-top:1px solid var(--line);color:#777f8c}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:760px){
+  .navlinks{display:none}.hero{padding-top:70px}.stats,.grid{grid-template-columns:1fr}
+  .section-head{display:block}.section-head p{margin-top:12px}h2{font-size:32px}.thumb{height:360px}.card{min-height:auto}
+}
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow"><span class="dot"></span> ESP32</div>
+    <h1>Xbmod<br><em>Tesla apps</em></h1>
+    <p class="lead">
+      A collection of ESP32-based applications to improve Autopilot/EAP capabilities in countries where FSD are not yet available.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="#apps">Explore the applications</a>
+      <a class="btn" href="https://github.com/06066060606060?tab=repositories" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="safety">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Important</div><h2>Research only firmware</h2></div>
+    </div>
+    <div class="notice">
+      ⚠️ These projects interact directly with a Tesla vehicle CAN bus and are intended for controlled bench testing,
+      code review and research environments only. Do not use them on public roads or in any situation where unsafe
+      behavior could put people or property at risk. Always verify wiring, configuration and vehicle compatibility
+      before testing, and comply with local laws.
+    </div>
+  </div>
+</section>
+<section id="apps">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">The collection</div>
+        <h2>Applications</h2>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <div><div class="number"></div><h3>EU Summon Unlock</h3><p>A dedicated ESP32 solution focused on restoring and extending Smart Summon-related functionality in regions affected by EU restrictions. It monitors vehicle state, uses an injection gate to avoid manual-driving injection.</p></div>
+  
+        </div>
+        <div class="thumb">
+          <a class="image-link" href="https://github.com/user-attachments/assets/d8c8b306-8155-48e1-bacd-6af79aef1c88" target="_blank" rel="noopener" aria-label="Open EU Summon Unlock dashboard image in a new tab"><img src="https://github.com/user-attachments/assets/d8c8b306-8155-48e1-bacd-6af79aef1c88" alt="EU Summon Unlock dashboard"></a>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <span class="feature">Smart Summon</span><span class="feature">Live Stats</span>
+            <span class="feature">Wi‑Fi Dashboard</span><span class="feature">OTA</span>
+          </div>
+          <div class="detail">
+            <strong>What it does</strong>
+            <ul>
+              <li>Bypasses the documented R79 EU restriction in Autopilot.</li>
+              <li>Expands Summon range up to ±85 m.</li>
+              <li>Provides TLSSC where not available.</li>
+              <li>Uses Parked / Summoning / AP-active state gates before injection.</li>
+            </ul>
+          </div>
+          <div class="card-foot"><span class="tag">ESP32-S3</span><a class="link" href="https://github.com/06066060606060/Summon-Unlock" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div><div class="number"></div><h3>Nag-killer</h3><p>An ESP32-S3 based solution dedicated to reducing Autopilot driver-attention interruptions through configurable CAN behavior. It provides two operating modes, including a TSL6P-inspired burst/pause pattern.</p></div>
+      
+        </div>
+        <div class="thumb">
+          <a class="image-link" href="https://github.com/user-attachments/assets/1bf8f227-1540-4e55-8539-b36169f78e44" target="_blank" rel="noopener" aria-label="Open Nag-killer dashboard image in a new tab"><img src="https://github.com/user-attachments/assets/1bf8f227-1540-4e55-8539-b36169f78e44" alt="Nag-killer dashboard"></a>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <span class="feature">Live Stats</span><span class="feature">Wi‑Fi Dashboard</span>
+          </div>
+          <div class="detail">
+            <strong>What it does</strong>
+            <ul>
+              <li>Mode A applies a fixed +1.80 Nm value with handsOn=1.</li>
+              <li>Mode B cycles through +1.80, +1.50, −1.50 and −1.80 Nm.</li>
+              <li>Uses configurable burst / pause timing.</li>
+              <li>Exposes configuration, live statistics and reset through the local web API.</li>
+            </ul>
+          </div>
+          <div class="card-foot"><span class="tag">ESP32-S3</span><a class="link" href="https://github.com/06066060606060/nag-killer" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div><div class="number"></div><h3>Advanced EAP & EU-Unlock</h3><p>The most feature-rich unified firmware in the collection. It combines Advanced EAP features with EU Summon Unlock on a dual-CAN LilyGO / T-2Can platform. It can manage automatic turn-signal behavior for lane changes, configurable delays, lane-change cancellation, EU restriction-related functions.</p></div>
+       
+        </div>
+        <div class="thumb">
+          <a class="image-link" href="https://github.com/user-attachments/assets/98c1d6aa-3649-4669-b88b-619103429297" target="_blank" rel="noopener" aria-label="Open Advanced EAP dashboard image in a new tab"><img src="https://github.com/user-attachments/assets/98c1d6aa-3649-4669-b88b-619103429297" alt="Advanced EAP dashboard"></a>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <span class="feature">Advanced EAP</span><span class="feature">Auto Lane Change</span>
+            <span class="feature">Summon Unlock</span><span class="feature">CAN A / B</span>
+          </div>
+          <div class="detail">
+            <strong>What it does</strong>
+            <ul>
+              <li>Automatic turn-signal activation when the vehicle requests a lane change.</li>
+              <li>Configurable turn-signal delay directly from the dashboard.</li>
+              <li>Supports lane-change cancellation from the screen, opposite indicator or door button.</li>
+              <li>Provides EU Unlock functions including R79-related AP behavior and expanded Summon range.</li>
+            </ul>
+          </div>
+          <div class="card-foot"><span class="tag">LilygoT2CAN</span><a class="link" href="https://github.com/06066060606060/Advanced-eap-eu-unlock" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div><div class="number"></div><h3>Nag-killer & EU-Unlock</h3><p>A unified dual-CAN platform combining Nag Killer and EU Summon Unlock. CAN A handles the Nag Killer side while CAN B handles Summon Unlock, providing a single hardware platform, web dashboard, runtime diagnostics and OTA update workflow instead of requiring separate devices for these two projects.</p></div>
+         
+        </div>
+        <div class="thumb">
+          <a class="image-link" href="https://github.com/user-attachments/assets/c7b60bb3-f9ca-4d69-95fc-50dcbf2893b7" target="_blank" rel="noopener" aria-label="Open Nag-killer and EU-Unlock dashboard image in a new tab"><img src="https://github.com/user-attachments/assets/c7b60bb3-f9ca-4d69-95fc-50dcbf2893b7" alt="Nag-killer and EU-Unlock dashboard"></a>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <span class="feature">Nag Killer</span><span class="feature">Summon Unlock</span>
+            <span class="feature">CAN A / B</span><span class="feature">OTA</span>
+          </div>
+          <div class="detail">
+            <strong>What it does</strong>
+            <ul>
+              <li>Combines two previously separate functions in one LilyGO / T-2Can device.</li>
+              <li>CAN A / Party CAN is dedicated to Nag Killer.</li>
+              <li>CAN B / Chassis CAN is dedicated to Summon Unlock.</li>
+              <li>Includes TLSSC Restore and MadMax blindspot aggressiveness settings.</li>
+              <li>Provides a single local dashboard and OTA update workflow.</li>
+            </ul>
+          </div>
+          <div class="card-foot"><span class="tag">LilygoT2CAN</span><a class="link" href="https://github.com/06066060606060/T2CAN-Nag-killer-EU-unlock" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer id="community">
+  <div class="container footer-inner">
+    <div>
+      <a href="https://discord.gg/euPbYG8Npc" target="_blank" rel="noopener">Discord ↗</a>
+      &nbsp; · &nbsp;
+      <a href="https://buymeacoffee.com/xbmod" target="_blank" rel="noopener">Support the project↗</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
