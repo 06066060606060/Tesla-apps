@@ -83,10 +83,41 @@ footer{padding:45px 0;border-top:1px solid var(--line);color:#777f8c}
   .navlinks{display:none}.hero{padding-top:70px}.stats,.grid{grid-template-columns:1fr}
   .section-head{display:block}.section-head p{margin-top:12px}h2{font-size:32px}.thumb{height:360px}.card{min-height:auto}
 }
+
+.tabs-section{padding:20px 0 55px}
+.tabs-nav{display:flex;gap:8px;justify-content:center;margin:0 auto 22px;padding:6px;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:16px;width:max-content;max-width:100%}
+.tab-button{appearance:none;border:0;background:transparent;color:var(--muted);padding:12px 24px;border-radius:11px;font:inherit;font-weight:750;cursor:pointer;transition:.2s ease}
+.tab-button:hover{color:#fff;background:rgba(255,255,255,.045)}
+.tab-button.active{color:#fff;background:var(--accent);box-shadow:0 8px 24px rgba(232,33,39,.22)}
+.tab-panel{display:none;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border-radius:24px;padding:30px;box-shadow:var(--shadow)}
+.tab-panel.active{display:block;animation:tabIn .25s ease}
+@keyframes tabIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.tab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.info-card{padding:22px;border:1px solid var(--line);border-radius:17px;background:rgba(0,0,0,.14)}
+.info-card h3{margin:0 0 9px;font-size:20px}
+.info-card p,.info-card li{color:var(--muted);font-size:14px}
+.info-card ul{margin:10px 0 0;padding-left:20px}
+.codebox{margin-top:12px;padding:14px 16px;border-radius:11px;background:#080a0e;border:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:#d8dde6;overflow:auto}
+.wiring-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.wiring-table th,.wiring-table td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+.wiring-table th{color:#fff}.wiring-table td{color:var(--muted)}
+.tab-note{margin-top:18px;padding:14px 16px;border-radius:13px;background:rgba(232,33,39,.055);border:1px solid rgba(232,33,39,.22);color:#c7ccd5;font-size:13px}
+@media(max-width:760px){.tabs-nav{width:100%}.tab-button{flex:1;padding:11px 12px}.tab-panel{padding:20px}.tab-grid{grid-template-columns:1fr}.wiring-table{display:block;overflow-x:auto;white-space:nowrap}}
 </style>
 </head>
 <body>
 
+  <nav>
+  <div class="container nav-inner">
+    <a class="brand" href=""></a>
+    <div class="navlinks">
+      <a href="how-to-flash.html">How to Flash</a>
+      <a href="wiring.html">Wiring</a>
+      <a href="https://discord.gg/euPbYG8Npc" target="_blank" rel="noopener">Discord ↗</a>
+      <a href="https://buymeacoffee.com/xbmod" target="_blank" rel="noopener">Support the project ↗</a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="container">
@@ -116,6 +147,7 @@ footer{padding:45px 0;border-top:1px solid var(--line);color:#777f8c}
     </div>
   </div>
 </section>
+
 <section id="apps">
   <div class="container">
     <div class="section-head">
@@ -241,9 +273,8 @@ footer{padding:45px 0;border-top:1px solid var(--line);color:#777f8c}
 <footer id="community">
   <div class="container footer-inner">
     <div>
-      <a href="https://discord.gg/euPbYG8Npc" target="_blank" rel="noopener">Discord ↗</a>
-      &nbsp; · &nbsp;
-      <a href="https://buymeacoffee.com/xbmod" target="_blank" rel="noopener">Support the project↗</a>
+    
+      
     </div>
   </div>
 </footer>
