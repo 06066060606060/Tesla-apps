@@ -449,7 +449,7 @@ footer{
     <div class="eyebrow"><span class="dot"></span> ESP32</div>
     <h1>Xbmod<br><em>Tesla apps</em></h1>
     <p class="lead">
-      A collection of ESP32-based applications to improve Autopilot/EAP capabilities in countries where FSD are not yet available.
+      A collection of ESP32-based applications to improve Autopilot/EAP capabilities.
     </p>
     <div class="actions">
       <a class="btn primary" href="#apps">Explore the applications</a>
@@ -505,7 +505,6 @@ footer{
               <li>Bypasses the documented R79 EU restriction in Autopilot.</li>
               <li>Expands Summon range up to ±85 m.</li>
               <li>Provides TLSSC where not available.</li>
-              <li>Uses Parked / Summoning / AP-active state gates before injection.</li>
             </ul>
           </div>
           <div class="card-foot"><span class="tag">ESP32-S3</span><a class="link" href="https://github.com/06066060606060/Summon-Unlock" target="_blank" rel="noopener">GitHub ↗</a></div>
@@ -528,10 +527,11 @@ footer{
           <div class="detail">
             <strong>What it does</strong>
             <ul>
+              <li>Eliminate the "hands on the wheel" prompt while using Autopilot/FSD.</li>
               <li>Mode A applies a fixed +1.80 Nm value with handsOn=1.</li>
               <li>Mode B cycles through +1.80, +1.50, −1.50 and −1.80 Nm.</li>
-              <li>Uses configurable burst / pause timing.</li>
-              <li>Exposes configuration, live statistics and reset through the local web API.</li>
+              <li>Mode C random variation.</li>
+              <li>Eliminate the "hands on the wheel" prompt while using Autopilot/FSD.</li>
             </ul>
           </div>
           <div class="card-foot"><span class="tag">ESP32-S3</span><a class="link" href="https://github.com/06066060606060/nag-killer" target="_blank" rel="noopener">GitHub ↗</a></div>
